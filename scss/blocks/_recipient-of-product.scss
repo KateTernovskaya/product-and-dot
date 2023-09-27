@@ -1,0 +1,46 @@
+.recipient__of-product__block {
+  gap: 15px;
+}
+
+//Form
+.data__customer__form {
+  width: 83%;
+
+  & input {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+    height: 24px;
+  }
+
+  .input__name {
+    height: 16px;
+    color: $gray;
+    font-size: 13px;
+    margin-top: -5px;
+    opacity: 0;
+  }
+
+  .input__warning {
+    color: $orange;
+    font-size: 12px;
+    margin-top: -3px;
+    opacity: 0;
+  }
+}
+
+.customer__name, .customer__data {
+  display: flex;
+  gap: 24px;
+}
+
+.input__block {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1 0 0;
+}
+
+.input__info {
+  font-size: 12px;
+}
+
+

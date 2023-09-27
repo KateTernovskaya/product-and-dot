@@ -1,0 +1,36 @@
+.custom__checkbox {
+  position: relative;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  background-color: $bg;
+  border-radius: 5px;
+  border: 1px solid $light-gray;
+}
+
+.custom__checkbox:before {
+  content: '';
+
+  position: absolute;
+  display: inline-block;
+  width: 23px;
+  height: 23px;
+  background-image: url("../../img/icons/check.svg");
+  opacity: 0;
+  background-position: center;
+  border-radius: 5px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.real__checkbox:checked + .custom__checkbox:before {
+  opacity: 1;
+  background-color: $accent-violet;
+  border: 1px solid $accent-violet;
+  opacity: 1;
+}
+
+.real__checkbox {
+  appearance: none;
+  position: absolute;
+}

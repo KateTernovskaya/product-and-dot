@@ -1,0 +1,30 @@
+.payment__info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.payment__card {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.payment__system {
+  display: flex;
+  align-items: center;
+}
+
+.card__data {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+.payment__note {
+  margin-top: 3px;
+  font-size: 13px;
+  color: $gray;
+}

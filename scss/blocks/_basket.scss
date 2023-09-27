@@ -1,0 +1,162 @@
+.basket__title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.28px;
+  margin-bottom: -8px;
+}
+
+//Check all
+.check__all__items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.check__all {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  align-self: stretch;
+}
+
+//Product in basket
+.product__in-basket {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product__item {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: self-start;
+
+  & .product__img img {
+    width: 72px;
+    height: 96px;
+  }
+}
+.product__item:not(:first-child){
+  margin-top: -3px;
+}
+
+.mobile__product__size {
+  display: none;
+  border-radius: 6px;
+  background: $white;
+  line-height: 20px;
+  font-size: 14px;
+   padding: 1px 4px;
+  text-align: center;
+}
+
+.this__product, .this__product__result {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: self-start;
+}
+
+.check__product {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.product__item__character {
+  max-width: 275px;
+  font-size: 13px;
+  line-height: 16px;
+
+}
+
+.product__name {
+  font-size: 16px;
+  line-height: 24px
+}
+
+.product__characteristics {
+  padding-top: 7px;
+  display: flex;
+  gap: 16px;
+}
+
+.product__storage {
+  margin-top: 8px;
+  color: $gray;
+}
+
+.product__provider {
+ margin-top: 3px;
+  color: $gray;
+  display: flex;
+  gap: 6px;
+}
+
+.this__product__result {
+  width: 226px;
+}
+
+.product__quantity {
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product__counter {
+  width: 100px;
+  height: 44px;
+  background-color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  line-height: 24px;
+  border-radius: 8px;
+}
+
+.count__warning {
+  font-size: 13px;
+  line-height: 16px;
+  color: $orange;
+}
+
+.item__control {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+}
+
+.cost__item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  align-self: stretch;
+}
+
+.cost__with-sale {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+
+  & .currency {
+    font-size: 16px;
+  }
+}
+
+.big__sum {
+  font-size: 16px;
+}
+
+.cost__without-sale {
+  margin-top: -2px;
+  font-size: 13px;
+  color: $gray;
+  text-decoration: line-through;
+  border-bottom: 1px dashed $gray;
+}

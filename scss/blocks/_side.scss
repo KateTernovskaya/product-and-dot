@@ -1,0 +1,151 @@
+.side-bar {
+  margin-top: -18px;
+  max-width: 100%;
+}
+
+.basket__result {
+  padding: 20px 24px 24px 22px;
+  background-color: $white;
+  border-radius: 16px;
+}
+
+.result__block {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.result__sum {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+  margin-bottom: 11px;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.24px;
+
+
+  & .currency__for-pay {
+    font-size: 20px;
+  }
+}
+
+.details__sum__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.result__quantity__product {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  gap: 5px;
+}
+
+
+.result__block__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+  font-weight: 700;
+}
+
+.result__delivery__data {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+}
+
+.result__delivery__address {
+  font-size: 13px;
+}
+
+.result__delivery__date {
+  margin-top: -6px;
+  color: $accent-violet;
+  font-size: 13px;
+  border-bottom: 1px dashed $accent-violet;
+}
+
+.result__delivery__info {
+  margin-top: 12px;
+  display: flex;
+  padding: 8px 8px 12px 8px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 8px;
+  background: $bg;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.result__delivery__info_text_accent {
+  color: rgba(12, 180, 119, 1);
+  border-bottom: 1px dashed rgba(12, 180, 119, 1);
+  width: 62px;
+}
+
+.result__payment__card__info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  font-size: 13px;
+}
+
+.result__payment__control {
+  margin-top: 12px;
+  display: flex;
+  padding: 8px 8px 12px 8px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  align-self: stretch;
+  border-radius: 8px;
+  background: $bg;
+  font-size: 13px;
+}
+
+.payment-now {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+}
+
+.result__btn {
+  margin-top: 22px;
+}
+
+.order_btn {
+  height: 44px;
+  color: $white;
+  font-weight: 700;
+  padding: 0 32px 5px 32px;
+  text-align: center;
+  border-radius: 8px;
+  background: $accent-violet;
+  line-height: 24px;
+}
+
+.agreement {
+  margin-top: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
+  font-size: 13px;
+  line-height: 15px;
+}
+
+.agreement__text {
+  display: flex;
+  align-items: flex-start;
+}
