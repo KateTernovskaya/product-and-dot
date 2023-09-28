@@ -103,11 +103,11 @@ body {
   border-radius: 16px;
 }
 
-.hide{
+.hide {
   cursor: pointer;
 }
 
-details[open] .hide{
+details[open] .hide {
   transform: rotate(180deg);
   transition: all 0.5s;
 }
@@ -115,6 +115,11 @@ details[open] .hide{
 .mobile__menu {
   display: none;
 }
+
+.item__control img {
+  cursor: pointer;
+}
+
 
 
 
