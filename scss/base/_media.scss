@@ -147,10 +147,14 @@
       justify-content: flex-end;
     }
   }
+
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+     left: -220px;
+      }
 }
 
-
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 490px) {
   .main {
     padding-bottom: 5px;
 
@@ -220,17 +224,21 @@
       }
     }
 
-    .side-bar {
-
-      .basket__result {
-        background-color: $bg;
-      }
-
-      .result__delivery__info, .result__payment__control {
-        background-color: rgba(240, 236, 244, 1);
-      }
+  }
+  .side-bar {
+    .basket__result {
+      background-color: $bg;
     }
 
+    .result__delivery__info, .result__payment__control {
+      background-color: rgba(240, 236, 244, 1);
+    }
+  }
 
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    width: 100px;
+    top: 20px;
+    left: -50px;
   }
 }

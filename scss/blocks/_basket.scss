@@ -137,7 +137,21 @@
   display: flex;
   gap: 16px;
   justify-content: flex-end;
+
 }
+
+svg {
+  cursor: pointer;
+}
+
+.like:hover path {
+  fill: $accent-violet;
+}
+
+.delete:hover path {
+  fill: $orange;
+}
+
 
 .cost__item {
   display: flex;
@@ -145,7 +159,7 @@
   align-items: flex-end;
   align-self: stretch;
 
-  .cost__with-sale .price{
+  .cost__with-sale .price {
     font-weight: 700;
     font-size: 20px;
   }

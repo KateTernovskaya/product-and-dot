@@ -27,10 +27,49 @@
   opacity: 1;
   background-color: $accent-violet;
   border: 1px solid $accent-violet;
-  opacity: 1;
 }
 
 .real__checkbox {
+  appearance: none;
+  position: absolute;
+}
+
+
+
+//modal
+.modal__custom__checkbox {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: $white;
+  border-radius: 50%;
+  border: 1px solid $light-gray;
+}
+
+.modal__custom__checkbox:before {
+  content: '';
+
+  position: absolute;
+  display: inline-block;
+  left: -1px;
+  width: 20px;
+  height: 20px;
+  background-image: url("../../img/icons/white.svg");
+  opacity: 0;
+  border-radius: 50%;
+  background-position: center;
+   background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.modal__real__checkbox:checked + .modal__custom__checkbox:before {
+  opacity: 1;
+  background-color: $accent-violet;
+  border: 1px solid $accent-violet;
+}
+
+.modal__real__checkbox {
   appearance: none;
   position: absolute;
 }

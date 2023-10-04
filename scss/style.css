@@ -193,8 +193,71 @@ details[open] .hide {
   display: none;
 }
 
-.item__control img {
+[data-tooltip] {
+  position: relative;
   cursor: pointer;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  width: 300px;
+  left: -150px;
+  top: 30px;
+  background: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  padding: 0.5em;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  transition: 1s;
+  border-radius: 8px;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+}
+
+.tooltip__provider {
+  position: relative;
+  text-decoration: none;
+  color: black;
+  cursor: default;
+}
+.tooltip__provider .icon {
+  cursor: pointer;
+}
+
+.tooltip__provider__info {
+  content: "";
+  position: absolute;
+  width: 280px;
+  left: -120px;
+  top: 25px;
+  background: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  padding: 0.5em;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.5s;
+  border-radius: 8px;
+}
+
+.tooltip__provider:hover .tooltip__provider__info {
+  opacity: 1;
+  top: 2em;
+}
+
+.tooltip__provider__info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13px;
+}
+.tooltip__provider__info .ooo {
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .custom__checkbox {
@@ -225,10 +288,45 @@ details[open] .hide {
   opacity: 1;
   background-color: rgb(203, 17, 171);
   border: 1px solid rgb(203, 17, 171);
-  opacity: 1;
 }
 
 .real__checkbox {
+  appearance: none;
+  position: absolute;
+}
+
+.modal__custom__checkbox {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.modal__custom__checkbox:before {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  left: -1px;
+  width: 20px;
+  height: 20px;
+  background-image: url("../../img/icons/white.svg");
+  opacity: 0;
+  border-radius: 50%;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.modal__real__checkbox:checked + .modal__custom__checkbox:before {
+  opacity: 1;
+  background-color: rgb(203, 17, 171);
+  border: 1px solid rgb(203, 17, 171);
+}
+
+.modal__real__checkbox {
   appearance: none;
   position: absolute;
 }
@@ -347,8 +445,12 @@ details[open] .hide {
   .stop__items .stop__item .product__quantity {
     justify-content: flex-end;
   }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    left: -220px;
+  }
 }
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 490px) {
   .main {
     padding-bottom: 5px;
   }
@@ -401,11 +503,17 @@ details[open] .hide {
   .basket__block .delivery__block .return__delivery__text {
     display: inline-block;
   }
-  .basket__block .side-bar .basket__result {
+  .side-bar .basket__result {
     background-color: rgb(246, 246, 250);
   }
-  .basket__block .side-bar .result__delivery__info, .basket__block .side-bar .result__payment__control {
+  .side-bar .result__delivery__info, .side-bar .result__payment__control {
     background-color: rgb(240, 236, 244);
+  }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    width: 100px;
+    top: 20px;
+    left: -50px;
   }
 }
 .header {
@@ -618,6 +726,18 @@ details[open] .hide {
   justify-content: flex-end;
 }
 
+svg {
+  cursor: pointer;
+}
+
+.like:hover path {
+  fill: rgb(203, 17, 171);
+}
+
+.delete:hover path {
+  fill: rgb(255, 59, 48);
+}
+
 .cost__item {
   display: flex;
   flex-direction: column;
@@ -819,12 +939,16 @@ details[open] .hide {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   height: 24px;
 }
+.data__customer__form input:focus::placeholder {
+  opacity: 0;
+}
 .data__customer__form .input__name {
   height: 16px;
   color: rgb(151, 151, 175);
   font-size: 13px;
   margin-top: -5px;
   opacity: 0;
+  transition: opacity 0.3s;
 }
 .data__customer__form .input__warning {
   color: rgb(255, 59, 48);
@@ -971,11 +1095,11 @@ details[open] .hide {
   margin-top: 22px;
 }
 
-.order_btn {
+.order_btn button {
+  width: 100%;
   height: 44px;
   color: rgb(255, 255, 255);
   font-weight: 700;
-  padding: 0 32px 5px 32px;
   text-align: center;
   border-radius: 8px;
   background: rgb(203, 17, 171);
@@ -995,6 +1119,99 @@ details[open] .hide {
 .agreement__text {
   display: flex;
   align-items: flex-start;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+}
+
+.modal__content {
+  border-radius: 16px;
+  margin: 100px auto;
+  max-width: 460px;
+  position: relative;
+  width: 100%;
+  padding: 25px;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  max-height: 80vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.modal__content .order_btn {
+  margin-top: 30px;
+  width: 70%;
+}
+.modal__content .check__modal__custom__checkbox {
+  width: 90%;
+}
+
+.modal__close img {
+  cursor: pointer;
+}
+
+.modal__delivery__option {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 36px;
+  gap: 8px;
+}
+.modal__delivery__option button {
+  height: 100%;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 16px;
+  border-radius: 20px;
+  border: 2px solid rgba(203, 17, 171, 0.15);
+}
+
+.modal__delivery__addresses {
+  margin-top: 25px;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+.modal__delivery__addresses .addresses__title {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 16px;
+}
+
+.address {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+}
+
+.change__delivery, .change__pay {
+  cursor: pointer;
+}
+
+.card {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.show {
+  display: block;
+}
+
+.no__show {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */
