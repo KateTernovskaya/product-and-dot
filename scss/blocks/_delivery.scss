@@ -10,7 +10,6 @@
   width: 100%;
 }
 
-
 .delivery__info {
   display: flex;
   flex-direction: column;
@@ -23,14 +22,10 @@
   gap: 32px;
 }
 
-.delivery__point {
-}
-
 .delivery__info__title {
   width: 153px;
   font-weight: 600;
 }
-
 
 .delivery__point__info {
   font-size: 13px;
@@ -43,6 +38,7 @@
   display: flex;
   align-items: flex-start;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .return__delivery {

@@ -1,0 +1,70 @@
+//tooltip на бесплатно
+[data-tooltip] {
+  position: relative;
+  cursor: pointer;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  width: 300px;
+  left: -150px;
+  top: 30px;
+  background: $white;
+  color: $black;
+  padding: 0.5em;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  transition: 1s;
+  border-radius: 8px;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+}
+
+//tooltip на поставщика
+.tooltip__provider {
+  position: relative;
+  text-decoration: none;
+  color: black;
+  cursor: default;
+
+  & .icon {
+    cursor: pointer;
+  }
+}
+
+.tooltip__provider__info {
+  content: '';
+  position: absolute;
+  width: 280px;
+  left: -120px;
+  top: 25px;
+  background: $white;
+  color: $black;
+  padding: 0.5em;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  transition: .5s;
+  border-radius: 8px;
+}
+
+.tooltip__provider:hover .tooltip__provider__info {
+  opacity: 1;
+  top: 2em;
+}
+
+.tooltip__provider__info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13px;
+
+  & .ooo {
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}

@@ -12,7 +12,7 @@
   }
 
   input:focus::placeholder {
-opacity: 0;
+    opacity: 0;
   }
 
   .input__name {
@@ -23,7 +23,6 @@ opacity: 0;
     opacity: 0;
     transition: opacity 0.3s;
   }
-
 
   .input__warning {
     color: $orange;
@@ -48,7 +47,3 @@ opacity: 0;
 .input__info {
   font-size: 12px;
 }
-
-
-
-

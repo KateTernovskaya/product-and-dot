@@ -136,6 +136,7 @@
   .basket__items .product__in-basket, .stop-list .stop__items {
     gap: 5px;
   }
+
   .stop__items .stop__item {
     margin-top: 0;
 
@@ -150,8 +151,8 @@
 
   [data-tooltip]::after {
     content: attr(data-tooltip);
-     left: -220px;
-      }
+    left: -220px;
+  }
 }
 
 @media screen and (max-width: 490px) {
@@ -225,6 +226,7 @@
     }
 
   }
+
   .side-bar {
     .basket__result {
       background-color: $bg;

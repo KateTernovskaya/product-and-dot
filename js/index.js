@@ -1,67 +1,175 @@
-window.addEventListener('DOMContentLoaded', () => {
 //массив продуктов в корзине
-    let items = [
-        {
-            id: 1,
-            checked: true,
-            img: 'img/T-shirts.png',
-            name: 'Футболка UZcotton мужская',
-            characteristics: {
-                color: 'Цвет: белый',
-                size: 'Размер: 56',
-            },
-            storage: 'Коледино WB',
-            provider: 'OOO Мегапрофстиль',
-            count: 1,
-            stock: 2,
-            price: 522,
-            priceWithSale: 1051
+let items = [
+    {
+        id: 1,
+        checked: true,
+        img: 'img/T-shirts.png',
+        name: 'Футболка UZcotton мужская',
+        characteristics: {
+            color: 'Цвет: белый',
+            size: 'Размер: 56',
         },
-        {
-            id: 2,
-            checked: true,
-            img: 'img/phone_case.png',
-            name: 'Силиконовый чехол картхолдер (отверстия) для карт, прозрачный кейс бампер на Apple iPhone XR, MobiSafe',
-            characteristics: {
-                color: 'Цвет: прозрачный',
-                size: '',
-            },
-            storage: 'Коледино WB',
-            provider: 'OOO Мегапрофстиль',
-            count: 200,
-            stock: 1000,
-            price: 11500,
-            priceWithSale: 10500,
+        storage: 'Коледино WB',
+        provider: 'OOO Мегапрофстиль',
+        count: 1,
+        stock: 2,
+        stocks: [
+            {
+                id: 1,
+                deliveryDate: '5—6 февраля',
+                count: 1,
+                stock: 2,
+            }
+        ],
+        price: 522,
+        priceWithSale: 1051
+    },
+    {
+        id: 2,
+        checked: true,
+        img: 'img/phone_case.png',
+        name: 'Силиконовый чехол картхолдер (отверстия) для карт, прозрачный кейс бампер на Apple iPhone XR, MobiSafe',
+        characteristics: {
+            color: 'Цвет: прозрачный',
+            size: '',
         },
-        {
-            id: 3,
-            checked: true,
-            img: 'img/pencils.png',
-            name: 'Карандаши цветные Faber-Castell "Замок", набор 24 цвета, заточенные, шестигранные, Faber-Castell',
-            characteristics: {
-                color: '',
-                size: '',
+        storage: 'Коледино WB',
+        provider: 'OOO Мегапрофстиль',
+        count: 200,
+        stock: 1000,
+        stocks: [
+            {
+                id: 1,
+                deliveryDate: '5—6 февраля',
+                count: 184,
+                stock: 184,
             },
-            storage: 'Коледино WB',
-            provider: 'OOO Мегапрофстиль',
-            count: 2,
-            stock: 2,
-            price: 247,
-            priceWithSale: 475
+            {
+                id: 2,
+                deliveryDate: '7—8 февраля',
+                count: 16,
+                stock: 184,
+            }
+        ],
+        price: 11500,
+        priceWithSale: 10500,
+    },
+    {
+        id: 3,
+        checked: true,
+        img: 'img/pencils.png',
+        name: 'Карандаши цветные Faber-Castell "Замок", набор 24 цвета, заточенные, шестигранные, Faber-Castell',
+        characteristics: {
+            color: '',
+            size: '',
         },
-    ];
+        storage: 'Коледино WB',
+        provider: 'OOO Мегапрофстиль',
+        count: 2,
+        stock: 2,
+        stocks: [
+            {
+                id: 1,
+                deliveryDate: '5—6 февраля',
+                count: 2,
+                stock: 2,
+            }
+        ],
+        price: 247,
+        priceWithSale: 475
+    },
+];
+
+window.addEventListener('DOMContentLoaded', () => {
+
+//считаем общий count
+    function countSum(item) {
+        return item.stocks.reduce((acc, cur) => {
+            return acc + cur.count
+        }, 0)
+    }
+
+    function stockSum(item) {
+        return item.stocks.reduce((acc, cur) => {
+            return acc + cur.stock
+        }, 0)
+    }
 
 //Отображение элементов на странице
     function renderItems() {
         items.forEach((i) => {
             renderItem(i);
+            renderItemStock(i)
         })
         productInBasket()
         listenerPlusMinusBtn()
         renderCountAndPrice()
+
     }
 
     renderItems();
+
+    function renderItemStock(item) {
+        item.stocks.forEach((stock) => {
+            renderItemStockElement(item, stock)
+        })
+    }
+
+    function renderItemStockElement(item, stock) {
+        const container = document.querySelector('.delivery__info');
+        let stockContainer = document.querySelector('.stock__' + stock.id);
+
+        if (stockContainer === null) {
+            container.innerHTML += stockTemplate(stock);
+            stockContainer = document.querySelector('.stock__' + stock.id)
+        }
+
+        const productContainer = stockContainer.querySelector('.delivery__date__product');
+        productContainer.innerHTML += stockProductTemplate(item, stock)
+
+    }
+
+    function changeItemStockMinus(item, stock) {
+        if (stock.count === 0) {
+            let s = document.querySelector('.stock__' + stock.id + ' .item_' + item.id);
+            s.remove();
+            let elems = document.querySelectorAll('.stock__' + stock.id + ' .currency__img');
+            if (elems.length === 0) {
+                document.querySelector('.stock__' + stock.id).remove()
+            }
+        } else {
+            let n = document.querySelector('.stock__' + stock.id + ' .item_' + item.id + ' span');
+            n.innerText = stock.count === 1 ? '' : stock.count;
+        }
+    }
+
+    function stockTemplate(stock) {
+        template = `
+       <div class="delivery__info__block delivery__date stock__` + stock.id + `">
+            <div class="delivery__info__title delivery__date__title">
+                ` + stock.deliveryDate + `
+            </div>
+            <div class="delivery__info__text">
+                 <div class="delivery__date__product">
+                  
+                 </div>
+            </div>
+       </div>
+       `
+        return template
+    }
+
+    function stockProductTemplate(item, stock) {
+        let stockValue = stock.count === 1 ? '' : stock.count
+
+        template = `
+            <div class="currency__img item_` + item.id + `">
+                <img src="` + item.img + `" alt="">
+                <span class="currency__icon">` + stockValue + `</span>
+            </div>
+        `
+        return template
+    }
 
     function getTemplateItem(item) {
         let checked = ''
@@ -69,85 +177,85 @@ window.addEventListener('DOMContentLoaded', () => {
             checked = "checked"
         }
         let template = `
-<div class="product__item product__item_` + item.id + `">
-    <div class="this__product">
-        <div class="check__product">
-            <label class="check__custom__checkbox">
-                <input class="real__checkbox checkbox" type="checkbox" 
-                ` + checked + `>
-                    <span class="custom__checkbox"></span>
-            </label>
-            <div class="product__img">
-                <img src="` + item.img + `" alt="">
-            </div>
-        </div>
-        <div class="product__item__character">
-            <div class="product__info">
-                <div class="product__name">` + item.name + `
-                </div>
-                <div class="product__characteristics">
-                    <div class="color">` + item.characteristics.color + `</div>
-                    <div class="size">` + item.characteristics.size + `</div>
-                </div>
-                <div class="product__storage">` + item.storage + `</div>
-                <div class="product__provider">
-                    ` + item.provider + `
-                    <a href="#" class="tooltip__provider"> 
-                    <img class="icon"  src="img/icons/info.svg" alt="Информация">
-                    <div class="tooltip__provider__info">
-                    <span class="ooo">OOO «МЕГАПРОФСТИЛЬ»</span>
-                    <span class="ogrn">ОГРН: 5167746237148</span>
-                    <span class="provider__adress">129337, Москва, улица Красная Сосна, 2, корпус 1, стр. 1, помещение 2, офис 34</span>
+        <div class="product__item product__item_` + item.id + `">
+            <div class="this__product">
+                <div class="check__product">
+                    <label class="check__custom__checkbox">
+                        <input class="real__checkbox checkbox" type="checkbox" 
+                        ` + checked + `>
+                            <span class="custom__checkbox"></span>
+                    </label>
+                    <div class="product__img">
+                        <img src="` + item.img + `" alt="">
                     </div>
-                    </a>
+                </div>
+                <div class="product__item__character">
+                    <div class="product__info">
+                        <div class="product__name">` + item.name + `
+                        </div>
+                        <div class="product__characteristics">
+                            <div class="color">` + item.characteristics.color + `</div>
+                            <div class="size">` + item.characteristics.size + `</div>
+                        </div>
+                        <div class="product__storage">` + item.storage + `</div>
+                        <div class="product__provider">
+                            ` + item.provider + `
+                            <a href="#" class="tooltip__provider"> 
+                            <img class="icon"  src="img/icons/info.svg" alt="Информация">
+                            <div class="tooltip__provider__info">
+                            <span class="ooo">OOO «МЕГАПРОФСТИЛЬ»</span>
+                            <span class="ogrn">ОГРН: 5167746237148</span>
+                            <span class="provider__adress">129337, Москва, улица Красная Сосна, 2, корпус 1, стр. 1, помещение 2, офис 34</span>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="this__product__result">
-        <div class="product__quantity">
-            <div class="product__counter">
-                <button type="button" class="btn-minus">–</button>
-                <span class="count">` + item.count + `</span>
-                <button type="button" class="btn-plus">+</button>
-            </div>`
-        if (item.stock < 5) {
+            <div class="this__product__result">
+                <div class="product__quantity">
+                    <div class="product__counter">
+                        <button type="button" class="btn-minus">–</button>
+                        <span class="count">` + countSum(item) + `</span>
+                        <button type="button" class="btn-plus">+</button>
+                    </div>`
+        if (stockSum(item) < 5) {
             template += `
-            <div class="count__warning">Осталось
-                <div class="count__warning_product">` + item.stock + `</div> шт.
-            </div> 
-`
+                    <div class="count__warning">Осталось
+                        <div class="count__warning_product">` + stockSum(item) + `</div> шт.
+                    </div> 
+        `
         } else {
             template += `
-        <div class="count__warning">
-            <div class="count__warning_product"></div>
-        </div>`
+                <div class="count__warning">
+                    <div class="count__warning_product"></div>
+                </div>`
 
         }
         template += `
-            <div class="item__control">
-                <svg class="like" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.03396 4.05857C2.26589 4.75224 1.76684 5.83284 1.99493 7.42928C2.22332 9.02783 3.26494 10.6852 4.80436 12.3478C6.25865 13.9184 8.10962 15.4437 9.99996 16.874C11.8903 15.4437 13.7413 13.9184 15.1956 12.3478C16.735 10.6852 17.7766 9.02783 18.005 7.4293C18.233 5.83285 17.734 4.75224 16.9659 4.05856C16.1766 3.34572 15.055 3 14 3C12.1319 3 11.0923 4.08479 10.5177 4.68443C10.4581 4.7466 10.4035 4.80356 10.3535 4.85355C10.1582 5.04882 9.84166 5.04882 9.6464 4.85355C9.59641 4.80356 9.54182 4.7466 9.48224 4.68443C8.90757 4.08479 7.86797 3 5.99995 3C4.94495 3 3.82325 3.34573 3.03396 4.05857ZM2.36371 3.31643C3.37369 2.40427 4.75202 2 5.99995 2C8.07123 2 9.34539 3.11257 9.99996 3.77862C10.6545 3.11257 11.9287 2 14 2C15.2479 2 16.6262 2.40428 17.6362 3.31644C18.6674 4.24776 19.2668 5.66715 18.9949 7.5707C18.7233 9.47217 17.5149 11.3148 15.9294 13.0272C14.3355 14.7486 12.3064 16.3952 10.3 17.9C10.1222 18.0333 9.87773 18.0333 9.69995 17.9C7.69353 16.3952 5.66443 14.7485 4.0706 13.0272C2.48503 11.3148 1.27665 9.47217 1.00498 7.57072C0.733012 5.66716 1.33249 4.24776 2.36371 3.31643Z" fill="black"/>
-                </svg>
-                <svg class="delete" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M2.5 5C2.5 4.72386 2.72386 4.5 3 4.5H17C17.2761 4.5 17.5 4.72386 17.5 5C17.5 5.27614 17.2761 5.5 17 5.5H3C2.72386 5.5 2.5 5.27614 2.5 5Z" fill="black"/>
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M3.4584 4.5H16.5059L15.6411 15.6926C15.5405 16.9947 14.4546 18 13.1486 18H6.84639C5.54299 18 4.45829 16.9986 4.35435 15.6994L3.4584 4.5ZM4.5416 5.5L5.35117 15.6196C5.41353 16.3992 6.06435 17 6.84639 17H13.1486C13.9322 17 14.5837 16.3968 14.6441 15.6155L15.4256 5.5H4.5416Z" fill="black"/>
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M13 5.5H7V3.46875C7 2.65758 7.65758 2 8.46875 2H11.5312C12.3424 2 13 2.65758 13 3.46875V5.5ZM8.46875 3C8.20987 3 8 3.20987 8 3.46875V4.5H12V3.46875C12 3.20987 11.7901 3 11.5312 3H8.46875Z" fill="black"/>
-                </svg>
+                    <div class="item__control">
+                        <svg class="like" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.03396 4.05857C2.26589 4.75224 1.76684 5.83284 1.99493 7.42928C2.22332 9.02783 3.26494 10.6852 4.80436 12.3478C6.25865 13.9184 8.10962 15.4437 9.99996 16.874C11.8903 15.4437 13.7413 13.9184 15.1956 12.3478C16.735 10.6852 17.7766 9.02783 18.005 7.4293C18.233 5.83285 17.734 4.75224 16.9659 4.05856C16.1766 3.34572 15.055 3 14 3C12.1319 3 11.0923 4.08479 10.5177 4.68443C10.4581 4.7466 10.4035 4.80356 10.3535 4.85355C10.1582 5.04882 9.84166 5.04882 9.6464 4.85355C9.59641 4.80356 9.54182 4.7466 9.48224 4.68443C8.90757 4.08479 7.86797 3 5.99995 3C4.94495 3 3.82325 3.34573 3.03396 4.05857ZM2.36371 3.31643C3.37369 2.40427 4.75202 2 5.99995 2C8.07123 2 9.34539 3.11257 9.99996 3.77862C10.6545 3.11257 11.9287 2 14 2C15.2479 2 16.6262 2.40428 17.6362 3.31644C18.6674 4.24776 19.2668 5.66715 18.9949 7.5707C18.7233 9.47217 17.5149 11.3148 15.9294 13.0272C14.3355 14.7486 12.3064 16.3952 10.3 17.9C10.1222 18.0333 9.87773 18.0333 9.69995 17.9C7.69353 16.3952 5.66443 14.7485 4.0706 13.0272C2.48503 11.3148 1.27665 9.47217 1.00498 7.57072C0.733012 5.66716 1.33249 4.24776 2.36371 3.31643Z" fill="black"/>
+                        </svg>
+                        <svg class="delete" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.5 5C2.5 4.72386 2.72386 4.5 3 4.5H17C17.2761 4.5 17.5 4.72386 17.5 5C17.5 5.27614 17.2761 5.5 17 5.5H3C2.72386 5.5 2.5 5.27614 2.5 5Z" fill="black"/>
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M3.4584 4.5H16.5059L15.6411 15.6926C15.5405 16.9947 14.4546 18 13.1486 18H6.84639C5.54299 18 4.45829 16.9986 4.35435 15.6994L3.4584 4.5ZM4.5416 5.5L5.35117 15.6196C5.41353 16.3992 6.06435 17 6.84639 17H13.1486C13.9322 17 14.5837 16.3968 14.6441 15.6155L15.4256 5.5H4.5416Z" fill="black"/>
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M13 5.5H7V3.46875C7 2.65758 7.65758 2 8.46875 2H11.5312C12.3424 2 13 2.65758 13 3.46875V5.5ZM8.46875 3C8.20987 3 8 3.20987 8 3.46875V4.5H12V3.46875C12 3.20987 11.7901 3 11.5312 3H8.46875Z" fill="black"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="cost__item">
+                    <div class="cost__with-sale big__sum">
+                        <span class="price">` + item.price + `</span>
+                        <span class="currency">сом</span>
+                    </div>
+                    <div class="cost__without-sale">
+                        <span class="price">` + item.priceWithSale + `</span>
+                        <span class="currency">сом</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="cost__item">
-            <div class="cost__with-sale big__sum">
-                <span class="price">` + item.price + `</span>
-                <span class="currency">сом</span>
-            </div>
-            <div class="cost__without-sale">
-                <span class="price">` + item.priceWithSale + `</span>
-                <span class="currency">сом</span>
-            </div>
-        </div>
-    </div>
-</div>
     `;
 
         return template;
@@ -184,10 +292,10 @@ window.addEventListener('DOMContentLoaded', () => {
                 priceWithSale = elem.querySelector('.cost__with-sale .price'),
                 priceWithoutSale = elem.querySelector('.cost__without-sale .price');
 
-            priceWithSale.innerHTML = numberFormat(String(i.count * i.priceWithSale));
-            priceWithoutSale.innerHTML = numberFormat(String(i.count * i.price));
+            priceWithSale.innerHTML = numberFormat(String(countSum(i) * i.priceWithSale));
+            priceWithoutSale.innerHTML = numberFormat(String(countSum(i) * i.price));
 
-            if (i.count * i.priceWithSale > 999999) {
+            if (countSum(i) * i.priceWithSale > 999999) {
                 priceWithSale.style.fontSize = '16px';
             }
         })
@@ -197,14 +305,14 @@ window.addEventListener('DOMContentLoaded', () => {
     function calcTotals() {
         const totalWithSale = items.reduce((acc, cur) => {
             if (cur.checked) {
-                return acc + (cur.priceWithSale * cur.count)
+                return acc + (cur.priceWithSale * countSum(cur))
             }
             return acc
         }, 0);
 
         const total = items.reduce((acc, cur) => {
             if (cur.checked) {
-                return acc + (cur.price * cur.count)
+                return acc + (cur.price * countSum(cur))
             }
             return acc
         }, 0);
@@ -213,7 +321,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         const totalCount = items.reduce((acc, cur) => {
             if (cur.checked) {
-                return acc + cur.count
+                return acc + countSum(cur)
             }
             return acc
         }, 0);
@@ -234,19 +342,43 @@ window.addEventListener('DOMContentLoaded', () => {
                 plusBtn = productItem.querySelector('.btn-plus');
 
             minusBtn.addEventListener('click', function () {
-                if (i.count > 1) {
-                    i.count--
+                if (countSum(i) > 1) {
+                    for (let x = i.stocks.length - 1; x >= 0; x--) {
+                        let s = i.stocks[x]
+                        if (s.count > 0) {
+                            s.count--
+                            changeItemStockMinus(i, s)
+                            break
+                        }
+                    }
                 }
                 renderCountAndPrice()
             });
 
             plusBtn.addEventListener('click', function () {
-                if (i.count < i.stock) {
-                    i.count++
+                if (countSum(i) < stockSum(i)) {
+                    for (let x = 0; x < i.stocks.length; x++) {
+                        let s = i.stocks[x]
+                        if (s.count < s.stock) {
+                            s.count++
+                            changeItemStockPlus(i, s)
+                            break
+                        }
+
+                    }
                 }
                 renderCountAndPrice()
             });
         })
+    }
+
+    function changeItemStockPlus(item, stock) {
+        if (stock.count === 1) {
+            renderItemStockElement(item, stock)
+        } else {
+            let n = document.querySelector('.stock__' + stock.id + ' .item_' + item.id + ' span');
+            n.innerText = stock.count === 1 ? '' : stock.count;
+        }
     }
 
     function calcCounts() {
@@ -255,14 +387,14 @@ window.addEventListener('DOMContentLoaded', () => {
             const minusBtn = productItem.querySelector('.btn-minus'),
                 plusBtn = productItem.querySelector('.btn-plus');
 
-            if (i.count === 1) {
+            if (countSum(i) === 1) {
                 minusBtn.disabled = true;
                 minusBtn.style.color = 'rgba(0, 0, 0, 0.2)'
             } else {
                 minusBtn.disabled = false;
                 minusBtn.style.color = 'black'
             }
-            if (i.count === i.stock) {
+            if (countSum(i) === stockSum(i)) {
                 plusBtn.disabled = true;
                 plusBtn.style.color = 'rgba(0, 0, 0, 0.2)'
             } else {
@@ -270,7 +402,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 plusBtn.style.color = 'black'
             }
 
-            productItem.querySelector('.count').innerText = i.count;
+            productItem.querySelector('.count').innerText = countSum(i);
         })
     }
 
@@ -291,8 +423,10 @@ window.addEventListener('DOMContentLoaded', () => {
             checkbox.addEventListener('change', () => {
                 i.checked = !i.checked;
                 if (!i.checked) {
+                    deleteItemStocks(i)
                     checkedCount--
                 } else {
+                    renderItemStock(i)
                     checkedCount++
                 }
                 if (checkedCount === items.length) {
@@ -301,6 +435,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     mainCheckbox.checked = false;
                 }
                 calcTotals()
+
             });
         })
 
@@ -310,19 +445,24 @@ window.addEventListener('DOMContentLoaded', () => {
                 const checkbox = productItem.querySelector('.checkbox');
                 checkbox.checked = mainCheckbox.checked;
 
-                i.checked = mainCheckbox.checked;
-                if (!i.checked) {
-                    checkedCount--
-                } else {
-                    checkedCount++
+                if (i.checked === mainCheckbox.checked) {
+                    return
                 }
 
-                if (mainCheckbox.checked) {
-                    checkedCount = items.length
+                i.checked = mainCheckbox.checked;
+                if (!i.checked) {
+                    deleteItemStocks(i)
                 } else {
-                    checkedCount = 0
+                    renderItemStock(i)
                 }
             })
+
+            if (mainCheckbox.checked) {
+                checkedCount = items.length
+            } else {
+                checkedCount = 0
+            }
+
             calcTotals()
         })
     }
@@ -385,6 +525,7 @@ window.addEventListener('DOMContentLoaded', () => {
             const deleteBtn = productItem.querySelector('.delete');
 
             deleteBtn.addEventListener('click', () => {
+                deleteItemStocks(i)
                 const index = items.indexOf(i);
                 items.splice(index, 1)
                 productItem.remove();
@@ -395,6 +536,17 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     deleteItem()
+
+    function deleteItemStocks(i) {
+        i.stocks.forEach((stock) => {
+            const s = document.querySelector('.stock__' + stock.id)
+            s.querySelector('.item_' + i.id).remove();
+            const stockElements = s.querySelectorAll('.currency__img')
+            if (stockElements.length === 0) {
+                s.remove()
+            }
+        })
+    }
 
 //Удаление товара из stop list
     function deleteStopItem() {
