@@ -79,9 +79,7 @@ let items = [
         priceWithSale: 475
     },
 ];
-
 window.addEventListener('DOMContentLoaded', () => {
-
 //считаем общий count
     function countSum(item) {
         return item.stocks.reduce((acc, cur) => {
@@ -104,10 +102,7 @@ window.addEventListener('DOMContentLoaded', () => {
         productInBasket()
         listenerPlusMinusBtn()
         renderCountAndPrice()
-
     }
-
-    renderItems();
 
     function renderItemStock(item) {
         item.stocks.forEach((stock) => {
@@ -126,7 +121,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
         const productContainer = stockContainer.querySelector('.delivery__date__product');
         productContainer.innerHTML += stockProductTemplate(item, stock)
-
     }
 
     function changeItemStockMinus(item, stock) {
@@ -255,9 +249,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             </div>
-        </div>
-    `;
-
+        </div>`;
         return template;
     }
 
@@ -325,7 +317,6 @@ window.addEventListener('DOMContentLoaded', () => {
             }
             return acc
         }, 0);
-
 
         document.querySelector('.result__sum-for-pay span').innerText = (numberFormat(totalWithSale));
         document.querySelector('.details__result__sum span').innerText = (numberFormat(total));
@@ -467,9 +458,7 @@ window.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    checkedItem()
-
-//Checkbox на оплату
+    //Checkbox на оплату
     document.querySelector('.checkbox__pay').addEventListener('change', () => {
         changeOrderBtnText()
     })
@@ -479,7 +468,6 @@ window.addEventListener('DOMContentLoaded', () => {
         const text = document.querySelector('.result__sum-for-pay');
         const checkbox = document.querySelector('.checkbox__pay');
         const checkInfo = document.querySelector('.result__payment__info');
-
 
         if (checkbox.checked) {
             btn.innerText = `Оплатить ${text.innerText}`
@@ -535,8 +523,6 @@ window.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    deleteItem()
-
     function deleteItemStocks(i) {
         i.stocks.forEach((stock) => {
             const s = document.querySelector('.stock__' + stock.id)
@@ -559,8 +545,6 @@ window.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    deleteStopItem()
-
 //Форма
     const form = document.querySelector('.data__customer__form');
     const inputBlock = form.querySelectorAll('.input__block');
@@ -578,8 +562,6 @@ window.addEventListener('DOMContentLoaded', () => {
             })
         })
     }
-
-    showInputName();
 
     function formVerification() {
         inputBlock.forEach((i) => {
@@ -663,7 +645,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 validateTel()
                 validateInn()
 
-
                 if (email !== null) {
                     email.addEventListener('keyup', function () {
                         validateEmail()
@@ -682,9 +663,6 @@ window.addEventListener('DOMContentLoaded', () => {
             })
         })
     }
-
-    formVerification();
-
 
 //Modal
     const modalTriggerPayment = document.querySelectorAll('.change__pay');
@@ -727,8 +705,13 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    //Вызовы функций
+    renderItems();
+    checkedItem();
+    deleteItem();
+    deleteStopItem();
+    showInputName();
+    formVerification();
     modal(modalTriggerPayment, modalPayment, modalClose);
-    modal(modalTriggerDelivery, modalDelivery, modalClose)
-
-
+    modal(modalTriggerDelivery, modalDelivery, modalClose);
 })
